@@ -25,7 +25,7 @@ var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb+srv://buiquanghuy742:buiquanghuy742@cluster0.2sybn.mongodb.net/test"
 
 //localhost:3000
-app.get('/',async function(req,res){
+app.get('/product',async function(req,res){
     let client = await MongoClient.connect(url);
     let dbo = client.db("Product");
     let result = await dbo.collection("product").find({}).toArray();
