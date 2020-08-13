@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Insert product</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+     body{background-image: url("https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/672f5067562819.5b3e17b2e3033.jpg");}
+  </style>
+</head>
+
+<body>
+  <center>
+    <h1 style="color: red">Add New Product</h1>
+  </center>
+  <br>
+  <div class="container">
+    <form action="/doInsert" method="post">
+      <div class="form-group">
+
+        <label>Name</label>
+        <input type="text" name="txtName" id="" class="form-control">
+        <br>
+        <label>Quantity</label>
+        <input type="text" name="txtQuantity" id="" class="form-control">
+        <br>
+        <label> Price($) </label>
+        <input type="text" name="txtPrice" id="" class="form-control">
+        <br>      
+        <label> Description </label>
+        <input type="text" name="txtDescription" id="" class="form-control">
+        <br>
+        <div class="container">
+          <center>
+            <button type="submit" class="btn btn-danger">Insert</button>
+          </center>
+        </div>
+      </div>
+    </form>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <h1><a class="navbar-brand" href="/product">Shoes</a></h1>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="/users">View Users</a></li>
+                <li><a href="/insert">Insert Product</a></li>
+                <li><a href="/register"><span class="glyphicon glyphicon-log-in"></span> Register</a></li>
+            </ul>
+
+            <form class="navbar-form navbar-left" action="/doSearch" method="get">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search" name="txtSearch">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form> 
+             
+        </div>
+    </nav>
+
+    <br>
+    <ul class="list-group">
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+
+                    <th scope="col">Name</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Price($)</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Option</th>
+                </tr>
+            </thead>
+            {{#each model}}
+            <tbody>
+                <tr>
+
+                    <td>{{name}}</td>
+                    <td>{{quantity}}</td>
+                    <td>{{price}}</td>
+                    <td>{{description}}</td>
+
+                    <td>
+                        <button type="submit" class="btn btn-default">
+                            <a href="/remove?id={{_id}}">
+                                Delete
+                            </a> </button>
+                        <br><br>
+                    </td>
+                </tr>
+            </tbody>
+            {{/each}}
+        </table>
+    </ul>
+</body>
+
+</html>
