@@ -25,7 +25,7 @@ var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb+srv://buiquanghuy742:buiquanghuy742@cluster0.2sybn.mongodb.net/test"
 
 //localhost:3000
-app.get('/product',async function(req,res){
+app.get('/',async function(req,res){
     let client = await MongoClient.connect(url);
     let dbo = client.db("Product");
     let result = await dbo.collection("product").find({}).toArray();
@@ -39,7 +39,7 @@ app.get('/remove', async (req,res)=>{
     let client = await MongoClient.connect(url);
     let dbo = client.db("Product");
     await dbo.collection("product").deleteOne({_id:ObjectID(id)});
-    res.redirect('/product');
+    res.redirect('/');
 })
 
 
@@ -65,7 +65,7 @@ app.post('/doInsert',async (req,res)=>{
     let client = await MongoClient.connect(url);
     let dbo = client.db("Product");
     await dbo.collection("product").insertOne(newProduct);
-    res.redirect('/product');
+    res.redirect('/');
 })
 
 // SEARCH FUNCTION
@@ -91,11 +91,11 @@ app.post('/doRegister',async(req,res)=>{
         let errorModel = {emailError:"Email must have more than 3 characters",
         nameError: "Name must have more than 3 characters!"
             };
-        res.render('/product',{model:errorModel})
+        res.render('/',{model:errorModel})
     }else{
             let data = inputName + ';' +inputEmail + '\n';
             fs.appendFile(fileName,data,function(err){
-            res.redirect('/product');
+            res.redirect('/');
         })
     }   
     let client = await MongoClient.connect(url);
