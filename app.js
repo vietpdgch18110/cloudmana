@@ -98,10 +98,11 @@ app.post('/doRegister',async(req,res)=>{
             res.redirect('/product');
         })
     }   
+    
     let client = await MongoClient.connect(url);
     let dbo = client.db("Product");
     await dbo.collection("user").insertOne({name:inputName,email:inputEmail});
-    res.redirect('product');
+    res.redirect('/product');
 
 })
 
