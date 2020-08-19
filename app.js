@@ -26,7 +26,7 @@ var url =
 app.get("/product", async function (req, res) {
   let client = await MongoClient.connect(url);
   let dbo = client.db("Product");
-  let result = await dbo.collection("product").find({}).toArray();
+  let result = await dbo.collection("product").find({}).toArray(); // print product in product table
   res.render("index", { model: result });
 });
 
@@ -98,24 +98,31 @@ app.get("/register", function (req, res) {
   res.render("register");
 });
 
+const { body, validationResult } = require('express-validator');
+
+
 var fileName = "users.txt";
 // connect to hbs
 app.post("/doRegister", async (req, res) => {
   let inputName = req.body.txtName;
   let inputEmail = req.body.txtEmail;
+
+  
+
   // check data
-  if (inputName.length < 4) {
-    let errorModel = {
-      emailError: "Email must have more than 3 characters",
-      nameError: "Name must have more than 3 characters!",
-    };
-    res.render("/users", { model: errorModel });
-  } else {
-    let data = inputName + ";" + inputEmail + "\n";
-    fs.appendFile(fileName, data, function (err) {
-      res.redirect("/users");
-    });
-  }
+  // if (inputName.length < 4) {
+  //   let errorModel = {
+  //     // emailError: "Email must have more than 3 characters",
+  //     nameError: "Name must have more than 3 characters!",
+  //   };
+  //   res.render("/users", { model: errorModel });
+  // } else {
+  //   let data = inputName + ";" + inputEmail + "\n";
+  //   fs.appendFile(fileName, data, function (err) {
+  //     res.redirect("/users");
+  //   });
+  // }
+  
   let client = await MongoClient.connect(url);
   let dbo = client.db("Product");
   await dbo

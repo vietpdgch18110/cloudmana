@@ -10,7 +10,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script>
         function checkForm() 
-        {
+        {   
+            
+
             let inputName = document.getElementById('txtName').value;
             if (inputName.trim().length == 0) {
                  alert('Name can not be empty');
@@ -18,7 +20,7 @@
                 return false;
             }
 
-            // alert: amail cannot be empty and must be syntax
+             // alert: amail cannot be empty and must be syntax
             let inputEmail = document.getElementById('textEmail').value;
             if (inputEmail.trim().length == 0) {
                 // alert('Email can not be empty');
