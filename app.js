@@ -1,3 +1,4 @@
+// them module express vao project
 const express = require("express");
 const engines = require("consolidate");
 const app = express();
@@ -14,9 +15,7 @@ app.engine("hbs", engines.handlebars);
 app.set("views", "./views");
 app.set("view engine", "hbs");
 
-app.get("/insert", (req, res) => {
-  res.render("insert");
-});
+
 
 // ket noi database
 var MongoClient = require("mongodb").MongoClient;
@@ -51,7 +50,15 @@ app.get("/removeusers", async (req, res) => {
   res.redirect("/users");
 });
 
+
 // INSERT
+app.get("/insert", (req, res) => {
+  res.render("insert");
+});
+
+// app.get("/update", (req,res)=>{
+//   res.redirect("update");
+// })
 // connect to hbs
 app.post("/doInsert", async (req, res) => {
   let inputName = req.body.txtName;
@@ -72,9 +79,10 @@ app.post("/doInsert", async (req, res) => {
   res.redirect("/product");
 });
 
-// SEARCH FUNCTION
+// SEARCH PRODUCT FUNCTION
 app.get("/doSearch", async (req, res) => {
   let name_search = req.query.txtSearch;
+  // connect to database Mongodb
   let client = await MongoClient.connect(url);
   let dbo = client.db("Product");
   let result = await dbo
@@ -84,10 +92,12 @@ app.get("/doSearch", async (req, res) => {
   res.render("index", { model: result });
 });
 
+
 // REGISTER
 app.get("/register", function (req, res) {
   res.render("register");
 });
+
 var fileName = "users.txt";
 // connect to hbs
 app.post("/doRegister", async (req, res) => {
