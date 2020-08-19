@@ -1,6 +1,7 @@
 // them module express vao project
 const express = require("express");
 const engines = require("consolidate");
+const { body } = require('express-validator');
 const app = express();
 var fs = require("fs");
 
@@ -92,25 +93,30 @@ app.get("/doSearch", async (req, res) => {
   res.render("index", { model: result });
 });
 
+// Check email da dung chua
+app.post('/users', body('inputEmail').custom(value => {
+  return Users.findUserByEmail(value).then(users => {
+    if (users) {
+      return Promise.reject('E-mail already in use');
+    }
+  });
+}), (req, res) => {
+  console.log('Enter again');
+});
 
 // REGISTER
 app.get("/register", function (req, res) {
   res.render("register");
 });
 
-const { body, validationResult } = require('express-validator');
-
-
 var fileName = "users.txt";
 // connect to hbs
 app.post("/doRegister", async (req, res) => {
   let inputName = req.body.txtName;
   let inputEmail = req.body.txtEmail;
-
   
-
-  // check data
-  // if (inputName.length < 4) {
+  // check validation
+  // if (inputName.length < 3 ) {
   //   let errorModel = {
   //     // emailError: "Email must have more than 3 characters",
   //     nameError: "Name must have more than 3 characters!",

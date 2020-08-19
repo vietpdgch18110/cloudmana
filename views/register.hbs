@@ -9,24 +9,36 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script>
-        function checkForm() 
+        function checkFormName() 
         {   
             
-
             let inputName = document.getElementById('txtName').value;
             if (inputName.trim().length == 0) {
-                 alert('Name can not be empty');
-                document.getElementById('lblNameError').innerText = "Name can not be empty ";
+                 alert('Name cannot be empty');
+                document.getElementById('lblNameError').innerText = "Not empty ";
                 return false;
-            }
+            } 
 
-             // alert: amail cannot be empty and must be syntax
-            let inputEmail = document.getElementById('textEmail').value;
-            if (inputEmail.trim().length == 0) {
-                // alert('Email can not be empty');
-                document.getElementById('lblEmailError').innerText = "Email can not be empty ";
+            if (inputName.trim().length < 3 ) {
+                 alert('Name must have more than 3 characters');
+                document.getElementById('lblNameError').innerText = "More than 3 charaters ";
                 return false;
-            }
+            }          
+        }
+        function checkFormEmail()
+        {
+              let inputEmail = document.getElementById('txtEmail').value;
+            if (inputEmail.trim().length == 0) {
+                 alert('Email cannot be empty');
+                document.getElementById('lblEmailError').innerText = "Not empty ";
+                return false;
+            } 
+
+            if (inputEmail.trim().length < 3 ) {
+                 alert('Email must have more than 3 characters');
+                document.getElementById('lblEmailError').innerText = "More than 3 charaters ";
+                return false;
+            }          
         }
     </script>
 </head>
@@ -36,7 +48,7 @@
         <center>
             <h1 style="color: red;">Register</h1>
         </center>
-        <form action="/doRegister" method="post" onsubmit="return checkForm()">
+        <form action="/doRegister" method="post" onsubmit="return checkFormName(), checkFormEmail()">
             <div class="form-group">
                 <label for="txtName">Name</label>
                 <input type="text" name="txtName" id="txtName" class="form-control">
