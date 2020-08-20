@@ -72,12 +72,12 @@ app.post("/doInsert", async (req, res) => {
     let errorModel = {priceError: "Price must be a number"};
     res.render("insert", {model:errorModel}) 
   } else{
-    let client = await MongoClient.connect(url);
-    let dbo = client.db("Product");
-    await dbo.collection("product").insertOne(newProduct);
-    res.redirect("/product");
+    
   }
- 
+  let client = await MongoClient.connect(url);
+  let dbo = client.db("Product");
+  await dbo.collection("product").insertOne(newProduct);
+  res.redirect("/product");
  
 });
 
