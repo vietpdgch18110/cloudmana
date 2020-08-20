@@ -17,7 +17,7 @@ app.engine("hbs", engines.handlebars);
 app.set("views", "./views");
 app.set("view engine", "hbs");
 
-var MongoClient = require("mongodb").MongoClient;
+var MongoClient = mongodb.MongoClient;
 var url =
   "mongodb+srv://phamducviet:phamducviet16@cluster0.bipjf.mongodb.net/test";
 
@@ -33,7 +33,7 @@ app.get("/", async function (req, res) {
 // DELETE PRODUCT
 app.get("/remove", async (req, res) => {
   let id = req.query.id;
-  var ObjectID = require("mongodb").ObjectID;
+  var ObjectID = mongodb.ObjectID;
   let client = await MongoClient.connect(url);
   let dbo = client.db("Staff");
   await dbo.collection("staff").deleteOne({ _id: ObjectID(id) });
