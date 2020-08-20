@@ -1,7 +1,7 @@
 // them module express vao project
 const express = require("express");
 const engines = require("consolidate");
-const { body } = require('express-validator');
+const { body } = require("express-validator");
 const app = express();
 var fs = require("fs");
 
@@ -15,8 +15,6 @@ app.use(express.static(publicDir));
 app.engine("hbs", engines.handlebars);
 app.set("views", "./views");
 app.set("view engine", "hbs");
-
-
 
 // ket noi database
 var MongoClient = require("mongodb").MongoClient;
@@ -51,7 +49,6 @@ app.get("/removeusers", async (req, res) => {
   res.redirect("/users");
 });
 
-
 // INSERT
 app.get("/insert", (req, res) => {
   res.render("insert");
@@ -66,13 +63,12 @@ app.post("/doInsert", async (req, res) => {
   let inputQuantity = req.body.txtQuantity;
   let inputPrice = req.body.txtPrice;
   let inputDescription = req.body.txtDescription;
-  let inputImage = req.body.txtImage;
+
   let newProduct = {
     name: inputName,
     quantity: inputQuantity,
     price: inputPrice,
     description: inputDescription,
-    image: inputImage,
   };
   let client = await MongoClient.connect(url);
   let dbo = client.db("Product");
@@ -94,15 +90,19 @@ app.get("/doSearch", async (req, res) => {
 });
 
 // Check email da dung chua
-app.post('/users', body('inputEmail').custom(value => {
-  return Users.findUserByEmail(value).then(users => {
-    if (users) {
-      return Promise.reject('E-mail already in use');
-    }
-  });
-}), (req, res) => {
-  console.log('Enter again');
-});
+app.post(
+  "/users",
+  body("inputEmail").custom((value) => {
+    return Users.findUserByEmail(value).then((users) => {
+      if (users) {
+        return Promise.reject("E-mail already in use");
+      }
+    });
+  }),
+  (req, res) => {
+    console.log("Enter again");
+  }
+);
 
 // REGISTER
 app.get("/register", function (req, res) {
@@ -114,21 +114,27 @@ var fileName = "users.txt";
 app.post("/doRegister", async (req, res) => {
   let inputName = req.body.txtName;
   let inputEmail = req.body.txtEmail;
-  
+
   // check validation
-  // if (inputName.length < 3 ) {
-  //   let errorModel = {
-  //     // emailError: "Email must have more than 3 characters",
-  //     nameError: "Name must have more than 3 characters!",
-  //   };
-  //   res.render("/users", { model: errorModel });
-  // } else {
-  //   let data = inputName + ";" + inputEmail + "\n";
-  //   fs.appendFile(fileName, data, function (err) {
-  //     res.redirect("/users");
-  //   });
-  // }
-  
+  if (inputName.length < 3) {
+    let errorModel = {
+      // emailError: "Email must have more than 3 characters",
+      nameError: "Invalid",
+    };
+    res.render("/register", { model: errorModel });
+  } else if (inputEmail.length < 3) {
+    let errorModel = {
+      // emailError: "Email must have more than 3 characters",
+      emailError: "Invalid",
+    };
+    res.render("/register", { model: errorModel });
+  } else {
+    let data = inputName + ";" + inputEmail + "\n";
+    fs.appendFile(fileName, data, function (err) {
+      res.redirect("/users");
+    });
+  }
+
   let client = await MongoClient.connect(url);
   let dbo = client.db("Product");
   await dbo
