@@ -25,7 +25,7 @@
                 return false;
             }          
         }
-        function checkFormEmail()
+        {{!-- function checkFormEmail()
         {
               let inputEmail = document.getElementById('txtEmail').value;
             if (inputEmail.trim().length == 0) {
@@ -39,7 +39,15 @@
                 document.getElementById('lblEmailError').innerText = "More than 3 charaters ";
                 return false;
             }          
-        }
+        } 
+        else if (inputEmail.length < 3) {
+       let errorModel = {
+      // emailError: "Email must have more than 3 characters",
+        emailError: "Invalid",
+    };
+    res.redirect("/register");
+  } 
+        --}}
     </script>
 </head>
 <body>

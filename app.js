@@ -6,6 +6,7 @@ const app = express();
 var fs = require("fs");
 
 var bodyParser = require("body-parser");
+const { finished } = require("stream");
 app.use(bodyParser.urlencoded({ extended: false }));
 
 var publicDir = require("path").join(__dirname, "/public");
@@ -115,32 +116,29 @@ app.post("/doRegister", async (req, res) => {
   let inputName = req.body.txtName;
   let inputEmail = req.body.txtEmail;
 
-  // check validation
-  if (inputName.length < 3) {
+  // // check validation
+  if (inputName.length < 3 ) {
     let errorModel = {
       // emailError: "Email must have more than 3 characters",
       nameError: "Invalid",
     };
-    res.render("/register", { model: errorModel });
-  } else if (inputEmail.length < 3) {
-    let errorModel = {
-      // emailError: "Email must have more than 3 characters",
-      emailError: "Invalid",
-    };
-    res.render("/register", { model: errorModel });
-  } else {
+    res.redirect("/register");
+  } 
+  else {
     let data = inputName + ";" + inputEmail + "\n";
     fs.appendFile(fileName, data, function (err) {
-      res.redirect("/users");
+      res.redirect("/users");     
     });
-  }
 
-  let client = await MongoClient.connect(url);
-  let dbo = client.db("Product");
-  await dbo
+    let client = await MongoClient.connect(url);
+    let dbo = client.db("Product");
+    await dbo
     .collection("user")
     .insertOne({ name: inputName, email: inputEmail });
-  res.redirect("/users");
+    res.redirect("/users");
+  }
+
+  
 });
 
 // get all users
