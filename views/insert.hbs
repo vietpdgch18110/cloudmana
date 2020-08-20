@@ -9,6 +9,17 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script>
+    function checkPrice()
+    {
+        let inputPrice = document.getElementById('txtPrice').value;
+            if (isNaN(inputPrice)) {
+                 alert('Price must be a number');
+                document.getElementById('lblpriceError').innerText = "Must be a number ";
+                return false;
+            } 
+    }
+  </script>
   <style>
     body {
       background-image: url("https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/672f5067562819.5b3e17b2e3033.jpg");
@@ -32,8 +43,9 @@
         <input type="text" name="txtQuantity" id="" class="form-control">
         <br>
         <label> Price($) </label>
-        <input type="text" name="txtPrice" id="" class="form-control">
-        <label>{{model: priceError}}</label> 
+        <input type="text" name="txtPrice" id="" class="form-control" onsubmit="return checkPrice()">
+       {{!-- // <label>{{model: priceError}}</label>  --}}
+         <label id="lblPriceError" style="color:red">{{model.priceError}}</label>
         <br>
         <label> Description </label>
         <input type="text" name="txtDescription" id="" class="form-control">

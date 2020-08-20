@@ -50,15 +50,11 @@ app.get("/removeusers", async (req, res) => {
   res.redirect("/users");
 });
 
+
 // INSERT
 app.get("/insert", (req, res) => {
   res.render("insert");
 });
-
-// app.get("/update", (req,res)=>{
-//   res.redirect("update");
-// })
-// connect to hbs
 app.post("/doInsert", async (req, res) => {
   let inputName = req.body.txtName;
   let inputQuantity = req.body.txtQuantity;
@@ -73,8 +69,8 @@ app.post("/doInsert", async (req, res) => {
   };
 
   if (isNaN(inputPrice)){
-    let errorModel = {priceError: "Price must be a number"}
-    res.render("insert", {model: errorModel}) 
+    let errorModel = {priceError: "Price must be a number"};
+    res.render("insert", {model:errorModel}) 
   } else{
     let client = await MongoClient.connect(url);
     let dbo = client.db("Product");
@@ -97,21 +93,6 @@ app.get("/doSearch", async (req, res) => {
     .toArray();
   res.render("index", { model: result });
 });
-
-// Check email da dung chua
-app.post(
-  "/users",
-  body("inputEmail").custom((value) => {
-    return Users.findUserByEmail(value).then((users) => {
-      if (users) {
-        return Promise.reject("E-mail already in use");
-      }
-    });
-  }),
-  (req, res) => {
-    console.log("Enter again");
-  }
-);
 
 // REGISTER
 app.get("/register", function (req, res) {
