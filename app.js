@@ -84,12 +84,13 @@ app.post("/doInsert", async (req, res) => {
 // SEARCH PRODUCT FUNCTION
 app.get("/doSearch", async (req, res) => {
   let name_search = req.query.txtSearch;
+  // let name_search_U = req.query.txtSearchU;
   // connect to database Mongodb
   let client = await MongoClient.connect(url);
   let dbo = client.db("Product");
   let result = await dbo
     .collection("product")
-    .find({ name: name_search })
+    .find({ name: new RegExp(name_search, "i") })
     .toArray();
   res.render("index", { model: result });
 });
