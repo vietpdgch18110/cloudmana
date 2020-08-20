@@ -71,10 +71,18 @@ app.post("/doInsert", async (req, res) => {
     price: inputPrice,
     description: inputDescription,
   };
-  let client = await MongoClient.connect(url);
-  let dbo = client.db("Product");
-  await dbo.collection("product").insertOne(newProduct);
-  res.redirect("/product");
+
+  if (isNaN(inputPrice)){
+    let errorModel = {priceError: "Price must be a number"}
+    res.render("insert", {model: errorModel}) 
+  } else{
+    let client = await MongoClient.connect(url);
+    let dbo = client.db("Product");
+    await dbo.collection("product").insertOne(newProduct);
+    res.redirect("/product");
+  }
+ 
+ 
 });
 
 // SEARCH PRODUCT FUNCTION
