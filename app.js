@@ -1,10 +1,11 @@
 // them module express vao project
+var http = require('http');
 const express = require("express");
 const engines = require("consolidate");
 const { body } = require("express-validator");
 const app = express();
 var fs = require("fs");
-var mongodb =require('mongodb')
+var mongodb = require('mongodb')
 var bodyParser = require("body-parser");
 const { finished } = require("stream");
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -26,7 +27,7 @@ app.get("/", async function (req, res) {
   let client = await MongoClient.connect(url);
   let dbo = client.db("Staff");
   let result = await dbo.collection("staff").find({}).toArray(); // print product in product table
-  
+
   res.render("index", { model: result });
 });
 
@@ -49,9 +50,9 @@ app.get("/insert", (req, res) => {
 app.post("/doInsert", async (req, res) => {
   let inputName = req.body.txtName;
   let inputAge = req.body.txtAge;
-  
+
   let inputGender = req.body.txtGender;
-  let inputNumber =req.body.txtNumber;
+  let inputNumber = req.body.txtNumber;
 
   let newStaff = {
     name: inputName,
@@ -60,16 +61,16 @@ app.post("/doInsert", async (req, res) => {
     number: inputNumber,
   };
 
-  if (isNaN(inputAge)){
-    let errorModel = {priceError: "Age must be a number"};
-    res.render("insert", {model:errorModel}) 
-  } else{
-    
-  } 
+  if (isNaN(inputAge)) {
+    let errorModel = { priceError: "Age must be a number" };
+    res.render("insert", { model: errorModel })
+  } else {
+
+  }
   let client = await MongoClient.connect(url);
-    let dbo = client.db("Staff");
-    await dbo.collection("staff").insertOne(newStaff);
-    res.redirect("/");
+  let dbo = client.db("Staff");
+  await dbo.collection("staff").insertOne(newStaff);
+  res.redirect("/");
 });
 
 // SEARCH PRODUCT FUNCTION
@@ -86,35 +87,38 @@ app.get("/doSearch", async (req, res) => {
   res.render("index", { model: result });
 });
 
-app.get("/update", async (req,res)=>{
-    let id=req.query.id;
-    var ObjectID = mongodb.ObjectID;
-    let client = await MongoClient.connect(url);
-    let dbo = client.db('Staff');
-    let user =await dbo.collection("staff").find({_id:ObjectID(id.toString())}).toArray();
-    console.log(user);
-   res.render('update',{model:user});
-})
-app.post("/doUpdate",async(req,res)=>{
-  let id =req.body.txtid;
-  let inputName = req.body.txtName;
-  let inputAge = req.body.txtAge;
-  let inputGender = req.body.txtGender;
-  let inputNumber =req.body.txtNumber;
+app.get("/update", async (req, res) => {
+  let id = req.query.id;
   var ObjectID = mongodb.ObjectID;
   let client = await MongoClient.connect(url);
   let dbo = client.db('Staff');
- // let user =await dbo.collection("staff").find({_id:ObjectID(id.toString())}).toArray();
-  let t= await dbo.collection("staff").
-    updateOne({ "_id":ObjectID(id.toString())},
-                  {$set:{name:inputName.toString(),
-                       age:inputAge.toString(),
-                     gender:inputGender.toString(),
-                     number:inputNumber.toString()
-                    }})
-    console.log(t);    
+  let user = await dbo.collection("staff").find({ _id: ObjectID(id.toString()) }).toArray();
+  console.log(user);
+  res.render('update', { model: user });
+})
+app.post("/doUpdate", async (req, res) => {
+  let id = req.body.txtid;
+  let inputName = req.body.txtName;
+  let inputAge = req.body.txtAge;
+  let inputGender = req.body.txtGender;
+  let inputNumber = req.body.txtNumber;
+  var ObjectID = mongodb.ObjectID;
+  let client = await MongoClient.connect(url);
+  let dbo = client.db('Staff');
+  // let user =await dbo.collection("staff").find({_id:ObjectID(id.toString())}).toArray();
+  let t = await dbo.collection("staff").
+    updateOne({ "_id": ObjectID(id.toString()) },
+      {
+        $set: {
+          name: inputName.toString(),
+          age: inputAge.toString(),
+          gender: inputGender.toString(),
+          number: inputNumber.toString()
+        }
+      })
+  console.log(t);
 
-    res.redirect('/');
+  res.redirect('/');
 })
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);
