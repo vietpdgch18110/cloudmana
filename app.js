@@ -67,6 +67,16 @@ app.post("/doInsert", async (req, res) => {
     price: inputPrice,
     description: inputDescription,
   };
+  
+  if (isNaN(inputName.substr(0,2))){
+    let errorModel = {nameError: "2 first characters must be numbers"};
+    res.render("insert", {model:errorModel}) 
+  }else{
+    let client = await MongoClient.connect(url);
+    let dbo = client.db("Product");
+    await dbo.collection("product").insertOne(newProduct);
+    res.redirect("/product");
+  }
 
   if (isNaN(inputPrice)){
     let errorModel = {priceError: "Price must be a number"};
