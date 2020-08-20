@@ -8,7 +8,7 @@
     <title>Document</title>
 </head>
 <body>
- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="/">Staff Manage</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -34,31 +34,33 @@
   </div>
 </nav>
  <div class="container">
-    <form action="/doInsert" method="post">
+      {{#each model}}
+    <form action="/doUpdate" method="post">
       <div class="form-group">
-
+          <input type="hidden" name="txtid" id="" class="form-control" value={{_id}}>
         <label>Name</label>
-        <input type="text" name="txtName" id="" class="form-control">
+        <input type="text" name="txtName" id="" class="form-control" value={{name}}>
          <label id="lblNameError" style="color:red">{{model.nameError}}</label>
         <br>
         <label>Age</label>
-        <input type="text" name="txtAge" id="" class="form-control">
+        <input type="text" name="txtAge" id="" class="form-control"value={{age}}>
         <br>
         <label> Gender </label>
-        <input type="text" name="txtGender" id="" class="form-control" onsubmit="return checkPrice()">
+        <input type="text" name="txtGender" id="" class="form-control" value={{gender}}>
        {{!-- // <label>{{model: priceError}}</label>  --}}
          <label id="lblPriceError" style="color:red">{{model.priceError}}</label>
         <br>
         <label> Number </label>
-        <input type="text" name="txtNumber" id="" class="form-control">
+        <input type="text" name="txtNumber" id="" class="form-control"value={{number}}>
         <br>
         <div class="container">
           <center>
-            <button type="submit" class="btn btn-danger">Insert</button>
+            <button type="submit" class="btn btn-danger">Update</button>
           </center>
         </div>
       </div>
     </form>
+    {{/each}}
   </div>
 </body>
 </html>
