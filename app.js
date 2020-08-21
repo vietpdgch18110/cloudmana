@@ -20,7 +20,7 @@ app.set("view engine", "hbs");
 
 var MongoClient = mongodb.MongoClient;
 var url =
-  "mongodb+srv://phamducviet:phamducviet16@cluster0.bipjf.mongodb.net/test";
+  "mongodb+srv://phamducviet:greenwich16@cluster0.bipjf.mongodb.net/test";
 
 //localhost:5000
 app.get("/", async function (req, res) {
